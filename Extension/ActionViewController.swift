@@ -22,6 +22,8 @@ class ActionViewController: UIViewController {
         
         // Правая кнопка в navigation controller с selector done()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        // Левая кнопка навигации
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(loadScript))
         
         // Механизм который позволяет отправлять информацию для зарегистрированных наблюдателей
         let notificationCenter = NotificationCenter.default
@@ -65,6 +67,11 @@ class ActionViewController: UIViewController {
         let customJavaScript = NSItemProvider(item: webDictionary, typeIdentifier: kUTTypePropertyList as String)
         item.attachments = [customJavaScript]
         extensionContext?.completeRequest(returningItems: [item])
+    }
+    
+    // Функция выбора скрипта
+    @objc func loadScript() {
+        
     }
     
     
