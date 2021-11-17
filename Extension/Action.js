@@ -1,19 +1,15 @@
 
-
-var Action = function() {};
+// Объявили функцию
+var Action = function() {}
 
 Action.prototype = {
-    
 run: function(parameters) {
-    
     parameters.completionFunction({"URL": document.URL, "title": document.title});
 },
     
-finilize: function(parameters) {
-    
+finalize: function(parameters) {
     var customJavaScript = parameters["customJavaScript"];
     eval(customJavaScript)
-    
 }
     
 };

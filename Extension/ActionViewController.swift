@@ -36,6 +36,7 @@ class ActionViewController: UIViewController {
                     
                     DispatchQueue.main.async {
                         self?.title = self?.pageTitle
+                        
                     }
                     
                 }
@@ -44,9 +45,9 @@ class ActionViewController: UIViewController {
         
     }
 
-    @IBAction func done() {
+   @objc func done() {
         let item = NSExtensionItem()
-        let argument: NSDictionary = ["customJavaScript": script.text!]
+        let argument: NSDictionary = ["customJavaScript": script.text as Any]
         let webDictionary: NSDictionary = [NSExtensionJavaScriptFinalizeArgumentKey: argument]
         let customJavaScript = NSItemProvider(item: webDictionary, typeIdentifier: kUTTypePropertyList as String)
         item.attachments = [customJavaScript]
