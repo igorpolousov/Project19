@@ -23,7 +23,7 @@ class ActionViewController: UIViewController {
         // Правая кнопка в navigation controller с selector done()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         // Левая кнопка навигации
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(loadScript))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(chooseAction))
         
         // Механизм который позволяет отправлять информацию для зарегистрированных наблюдателей
         let notificationCenter = NotificationCenter.default
@@ -70,10 +70,27 @@ class ActionViewController: UIViewController {
     }
     
     // Функция выбора скрипта
-    @objc func loadScript() {
+    @objc func chooseAction() {
+        let ac = UIAlertController(title: "Choose action", message: nil, preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        ac.addAction(UIAlertAction(title: "Examples", style: .default, handler: loadExamples))
+        ac.addAction(UIAlertAction(title: "Load Script", style: .default, handler: loadScript))
+        ac.addAction(UIAlertAction(title: "Save Script", style: .default, handler: saveScript))
+        present(ac, animated: true)
+    }
+    
+    
+    func loadExamples(action: UIAlertAction) {
         
     }
     
+    func loadScript(action: UIAlertAction) {
+        
+    }
+    
+    func saveScript(action: UIAlertAction) {
+        
+    }
     
     // Метод сделан чтобы сдвигался экран с текстом при достижении поля с клавиатурой
     @objc func adjustForKeyboard(notification: Notification) {
