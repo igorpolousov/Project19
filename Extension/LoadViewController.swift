@@ -9,7 +9,7 @@ import UIKit
 
 class LoadViewController: UITableViewController {
     
-    var savedScripts = [UserScript]()
+    var savedScriptsName = [UserScript]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,13 +19,13 @@ class LoadViewController: UITableViewController {
         
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return savedScripts.count
+        return savedScriptsName.count
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        let script = savedScripts[indexPath.row]
+        let script = savedScriptsName[indexPath.row]
         
         cell.textLabel?.text = script.title
         return cell
@@ -36,7 +36,7 @@ class LoadViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if savedScripts.isEmpty {
+            if savedScriptsName.isEmpty {
                 if let vc = storyboard?.instantiateViewController(withIdentifier: "LoadScript") as? ActionViewController {
                     navigationController?.pushViewController(vc, animated: true)
                 }

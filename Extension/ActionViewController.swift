@@ -17,6 +17,8 @@ class ActionViewController: UIViewController {
     var pageTitle = ""
     var pageURL = ""
     
+    var savedScriptsName = [UserScript]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -96,7 +98,11 @@ class ActionViewController: UIViewController {
     }
     
     func saveScript(action: UIAlertAction) {
-        
+        let ac = UIAlertController(title: "Name script", message: nil, preferredStyle: .alert)
+        ac.addTextField()
+        guard let text = ac.textFields?[0].text else { return }
+        let example = UserScript(title: text, exampleScript: script.text ?? "")
+        savedScriptsName.append(example)
     }
     
     // Метод сделан чтобы сдвигался экран с текстом при достижении поля с клавиатурой
