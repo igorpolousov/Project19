@@ -13,6 +13,6 @@ let exampleScripts = [
     
     (title: "ExtendedAlert",
      exampleScript: """
-            alert("Page title: " + document.title + "\\nPage url: " + document.URL);")
+            alert("Page title: " + document.title + "\\nPage url: " + document.URL);
             """)
 ]

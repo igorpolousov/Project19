@@ -81,7 +81,14 @@ class ActionViewController: UIViewController {
     
     
     func loadExamples(action: UIAlertAction) {
-        
+        let ac = UIAlertController(title: "Scripts", message: "Choose script", preferredStyle: .actionSheet)
+        for (title, exampleScript) in exampleScripts {
+            ac.addAction(UIAlertAction(title: title, style: .default) { [weak self] _ in
+                self?.script.text = exampleScript
+            })
+        }
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(ac, animated: true)
     }
     
     func loadScript(action: UIAlertAction) {
