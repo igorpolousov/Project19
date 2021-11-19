@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C22176622747B4EA00CD0D29 /* UserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22176612747B4EA00CD0D29 /* UserScript.swift */; };
+		C22176642747B84900CD0D29 /* ExampleScripts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22176632747B84900CD0D29 /* ExampleScripts.swift */; };
 		C2747CAB273E6D170047E743 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2747CAA273E6D170047E743 /* AppDelegate.swift */; };
 		C2747CAD273E6D170047E743 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2747CAC273E6D170047E743 /* SceneDelegate.swift */; };
 		C2747CAF273E6D170047E743 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2747CAE273E6D170047E743 /* ViewController.swift */; };
@@ -47,6 +48,7 @@
 
 /* Begin PBXFileReference section */
 		C22176612747B4EA00CD0D29 /* UserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScript.swift; sourceTree = "<group>"; };
+		C22176632747B84900CD0D29 /* ExampleScripts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleScripts.swift; sourceTree = "<group>"; };
 		C2747CA7273E6D170047E743 /* Project19.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project19.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2747CAA273E6D170047E743 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C2747CAC273E6D170047E743 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				C2747CC4273E6F320047E743 /* Media.xcassets */,
 				C2747CC6273E6F320047E743 /* ActionViewController.swift */,
 				C22176612747B4EA00CD0D29 /* UserScript.swift */,
+				C22176632747B84900CD0D29 /* ExampleScripts.swift */,
 				C2747CC8273E6F320047E743 /* MainInterface.storyboard */,
 				C2747CCB273E6F320047E743 /* Info.plist */,
 				C2747CD3273E733F0047E743 /* Action.js */,
@@ -240,6 +243,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2747CC7273E6F320047E743 /* ActionViewController.swift in Sources */,
+				C22176642747B84900CD0D29 /* ExampleScripts.swift in Sources */,
 				C22176622747B4EA00CD0D29 /* UserScript.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
