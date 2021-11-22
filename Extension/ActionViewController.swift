@@ -17,10 +17,11 @@ class ActionViewController: UIViewController {
     var pageTitle = ""
     var pageURL = ""
     
+    // Массив для сохранения скриптов по имени от пользователя
     var savedScriptsName = [UserScript]()
-    
+    // Массив для сохранения скриптов по имени хоста
     var savedScriptURL = [UserScript]()
-    
+    // Переменная для получения текста из таблицы сохраненных скриптов
     var scriptToLoad: String?
     
     override func viewDidLoad() {
@@ -28,6 +29,7 @@ class ActionViewController: UIViewController {
         
         print(savedScriptsName)
         
+        // Получение текста скрипта из таблицы сохраненных скриптов
         if let scriptReceived = scriptToLoad {
             script.text = scriptReceived
         }
@@ -63,6 +65,8 @@ class ActionViewController: UIViewController {
                     // Добавление title при появлении extension на экране
                     DispatchQueue.main.async {
                         self?.title = self?.pageTitle
+                        // Загрузка скрипта при открытии Extension в соотвествии с название хоста открытой страницы
+                        self?.loadScriptURL()
                         
                     }
                 }
@@ -74,6 +78,8 @@ class ActionViewController: UIViewController {
     
     // Кнопка done, нужна для передачи данных в файл Action.js
    @objc func done() {
+       // Сохранение скрипта
+       saveScriptURL()
         let item = NSExtensionItem()
        // Создан словарь который принимает значение с экрана UITextView
         let argument: NSDictionary = ["customJavaScript": script.text as Any]
@@ -83,7 +89,7 @@ class ActionViewController: UIViewController {
         extensionContext?.completeRequest(returningItems: [item])
     }
     
-    // Функция выбора скрипта
+    // Функция выбора действия левой кнопки
     @objc func chooseAction() {
         let ac = UIAlertController(title: "Choose action", message: nil, preferredStyle: .actionSheet)
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -93,7 +99,7 @@ class ActionViewController: UIViewController {
         present(ac, animated: true)
     }
     
-    
+    // Функция загрузки примеров скриптов
     func loadExamples(action: UIAlertAction) {
         let ac = UIAlertController(title: "Scripts", message: "Choose script", preferredStyle: .actionSheet)
         for (title, exampleScript) in exampleScripts {
@@ -104,17 +110,28 @@ class ActionViewController: UIViewController {
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(ac, animated: true)
     }
-    
+    // Сохранение скрипта по имени хоста
     func saveScriptURL() {
         if let url = URL(string: pageURL) {
             if let host = url.host {
                 let example = UserScript(title: host, exampleScript: script.text ?? "")
                 savedScriptURL.append(example)
+                saveURL()
             }
         }
     }
-    
+    // Сохранение скрипта по имени хоста в userDefaults
+    func saveURL() {
+        let defaults = UserDefaults.standard
+        let jsonEncoder = JSONEncoder()
+        
+        if let savedData = try? jsonEncoder.encode(savedScriptURL) {
+            defaults.setValue(savedData, forKey: "URL")
+        }
+    }
+    // Загрузка скрипта согласно выбранной страницы при запуске Extension
     func loadScriptURL() {
+        loadURL()
         if let url = URL(string: pageURL){
             if let host = url.host {
                 for object in savedScriptURL {
@@ -125,7 +142,20 @@ class ActionViewController: UIViewController {
             }
         }
     }
-    
+    // Загрузка скрипта при открытии Extension согласно имени хоста из UserDefaults
+    func loadURL() {
+        let defaults = UserDefaults.standard
+        let jsonDecoder = JSONDecoder()
+        
+        if let savedData = defaults.object(forKey: "URL") as? Data {
+            do {
+                savedScriptURL = try jsonDecoder.decode([UserScript].self, from: savedData)
+            } catch  {
+                print("Failed to load data")
+            }
+        }
+    }
+    // Загрузка скрипта из таблицы для левой кнопки
     func loadScript(action: UIAlertAction) {
         loadName()
         if let vc = storyboard?.instantiateViewController(withIdentifier: "Load") as? LoadViewController {
@@ -133,7 +163,7 @@ class ActionViewController: UIViewController {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
+    // Загрузка скрипта из userDefaults для левой кнопки
     func loadName() {
         let defaults = UserDefaults.standard
         let jsonDecoder = JSONDecoder()
@@ -146,6 +176,7 @@ class ActionViewController: UIViewController {
         }
     }
     
+    // Сохранение скрипта для левой кнопки с возможностью указать имя скрипта
     func saveScript(action: UIAlertAction) {
         let ac = UIAlertController(title: "Name script", message: nil, preferredStyle: .alert)
         ac.addTextField()
@@ -158,7 +189,7 @@ class ActionViewController: UIViewController {
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(ac, animated: true)
     }
-    
+    // Сохранение скрипта для левой кнопки в UserDefaults
     func saveName() {
         let defaults = UserDefaults.standard
         let jsonEncoder = JSONEncoder()
