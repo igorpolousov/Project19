@@ -9,6 +9,7 @@ import UIKit
 
 class LoadViewController: UITableViewController {
     
+    // Массив с сохраненными скриптами
     var savedScriptsName = [UserScript]()
     
     
@@ -16,9 +17,7 @@ class LoadViewController: UITableViewController {
         super.viewDidLoad()
         
         title = "Saved Scripts"
-        
-      
-        
+
         print("1 \(savedScriptsName)")
         
     }
