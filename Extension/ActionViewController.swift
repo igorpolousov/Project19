@@ -19,8 +19,16 @@ class ActionViewController: UIViewController {
     
     var savedScriptsName = [UserScript]()
     
+    var scriptToLoad: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(savedScriptsName)
+        
+        if let scriptReceived = scriptToLoad {
+            script.text = scriptReceived
+        }
         
         // Правая кнопка в navigation controller с selector done()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
@@ -94,15 +102,45 @@ class ActionViewController: UIViewController {
     }
     
     func loadScript(action: UIAlertAction) {
-        
+        loadName()
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "Load") as? LoadViewController {
+            vc.savedScriptsName = savedScriptsName
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func loadName() {
+        let defaults = UserDefaults.standard
+        let jsonDecoder = JSONDecoder()
+        if let savedData =  defaults.object(forKey: "Name") as? Data {
+            do {
+                savedScriptsName = try jsonDecoder.decode([UserScript].self, from: savedData)
+            } catch  {
+                print("Failed to load data")
+            }
+        }
     }
     
     func saveScript(action: UIAlertAction) {
         let ac = UIAlertController(title: "Name script", message: nil, preferredStyle: .alert)
         ac.addTextField()
-        guard let text = ac.textFields?[0].text else { return }
-        let example = UserScript(title: text, exampleScript: script.text ?? "")
-        savedScriptsName.append(example)
+        ac.addAction(UIAlertAction(title: "Add", style: .default) {[weak self, weak ac] _ in
+            guard let name = ac?.textFields?[0].text else { return }
+            let example = UserScript(title: name, exampleScript: (self?.script.text) ?? "")
+            self?.savedScriptsName.append(example)
+            self?.saveName()
+        })
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(ac, animated: true)
+    }
+    
+    func saveName() {
+        let defaults = UserDefaults.standard
+        let jsonEncoder = JSONEncoder()
+        
+        if let savedData = try? jsonEncoder.encode(savedScriptsName) {
+            defaults.setValue(savedData, forKey: "Name")
+        }
     }
     
     // Метод сделан чтобы сдвигался экран с текстом при достижении поля с клавиатурой
