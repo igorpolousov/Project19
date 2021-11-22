@@ -19,6 +19,8 @@ class ActionViewController: UIViewController {
     
     var savedScriptsName = [UserScript]()
     
+    var savedScriptURL = [UserScript]()
+    
     var scriptToLoad: String?
     
     override func viewDidLoad() {
@@ -68,6 +70,8 @@ class ActionViewController: UIViewController {
         }
     }
 
+    
+    
     // Кнопка done, нужна для передачи данных в файл Action.js
    @objc func done() {
         let item = NSExtensionItem()
@@ -99,6 +103,27 @@ class ActionViewController: UIViewController {
         }
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(ac, animated: true)
+    }
+    
+    func saveScriptURL() {
+        if let url = URL(string: pageURL) {
+            if let host = url.host {
+                let example = UserScript(title: host, exampleScript: script.text ?? "")
+                savedScriptURL.append(example)
+            }
+        }
+    }
+    
+    func loadScriptURL() {
+        if let url = URL(string: pageURL){
+            if let host = url.host {
+                for object in savedScriptURL {
+                    if object.title == host {
+                        script.text = object.exampleScript
+                    }
+                }
+            }
+        }
     }
     
     func loadScript(action: UIAlertAction) {
